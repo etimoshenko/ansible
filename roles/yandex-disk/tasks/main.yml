@@ -1,0 +1,38 @@
+---
+- name: YD | Check installed yandex-disk
+  shell: which yandex-disk
+  failed_when: false
+  ignore_errors: yes
+  register: yd_r_installed
+
+- block:
+  - name: YD | Add repo
+    become: True
+    copy:
+      dest: /etc/apt/sources.list.d/yandex.list
+      content: "deb http://repo.yandex.ru/yandex-disk/deb/ stable main"
+
+  - name: YD | Add repo key
+    become: True
+    apt_key:
+      url: http://repo.yandex.ru/yandex-disk/YANDEX-DISK-KEY.GPG
+      state: present
+      keyring: /etc/apt/trusted.gpg.d/yandex-disk.gpg
+    register: yd_r_repo
+
+  - name: YD | apt update
+    become: True
+    apt:
+      update_cache: yes
+    when: yd_r_repo is changed
+
+  - name: YD | Install yandex-disk
+    become: True
+    apt:
+      name: "{{ item }}"
+    with_items:
+      - yandex-disk
+
+  when: yd_r_installed.rc > 0
+  
+- include: config.yml

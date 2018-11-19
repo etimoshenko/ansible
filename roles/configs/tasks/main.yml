@@ -1,0 +1,19 @@
+---
+# tasks file for configs
+- name: Copy config files sudoers
+  become: True
+  template: src=templates/sudoers.j2 dest=/etc/sudoers
+
+- stat:
+    path: /etc/ssh/ssh_config
+  register: sym
+
+- name: Del default
+  become: True
+  file: path=/etc/ssh/ssh_config state=absent
+  when: sym.stat.islnk is defined and sym.stat.islnk == False
+
+- name: Link ssh_config file
+  become: True
+  file: dest=/etc/ssh/ssh_config src="{{ yandex_config_dir }}/config" state=link
+  when: (sym.stat.islnk is not defined) or (sym.stat.islnk == False)

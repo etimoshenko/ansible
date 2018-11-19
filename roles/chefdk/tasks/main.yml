@@ -1,0 +1,8 @@
+---
+- name: install chefdk ubuntu apt packages
+  apt:
+    deb: "{{ chefdk_deb }}"
+    state: present
+  become: True
+  
+- include: configs.yml

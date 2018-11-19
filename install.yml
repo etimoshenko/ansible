@@ -1,0 +1,17 @@
+---
+- name: install packages
+  hosts: 127.0.0.1
+  vars:
+    yandex_config_dir: "/data/YandexDisk/YandexDisk/ubuntu-configs/"
+    chefdk_deb: "https://packages.chef.io/files/stable/chefdk/3.4.38/ubuntu/18.04/chefdk_3.4.38-1_amd64.deb"
+  pre_tasks:
+    - name: update apt cache
+      become: True
+      apt: update_cache=yes
+  roles:
+    - role: configs
+    - role: install
+    - role: docker
+    - role: yandex-disk
+    - role: aws-cli
+    - role: chefdk

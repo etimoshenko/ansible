@@ -1,0 +1,10 @@
+---
+- name: AWSCLI | Install modules for python
+  become: True
+  pip: name={{ item }} state=latest
+  with_items:
+      - awscli
+
+- name: AWSCLI | Create .aws dir in home directory
+  file: path=~/.aws state=directory
+- include: config.yml

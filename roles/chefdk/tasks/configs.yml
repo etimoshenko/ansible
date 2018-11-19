@@ -1,0 +1,23 @@
+- name: AWSCLI | Create .aws dir in home directory
+  file: path=~/.chef state=directory
+
+- stat:
+    path: ~/.chef/knife.rb
+  register: sym_knife
+- name: Del default knife.rb file
+  file: path=~/.chef/knife.rb state=absent
+  when: sym_config.stat.islnk is defined and sym.stat.islnk == False
+- name: Link knife.rb file
+  file: dest=~/.chef/knife.rb src="{{ yandex_config_dir }}/chef/knife.rb" state=link
+  when: (sym_knife.stat.islnk is not defined) or (sym_knife.stat.islnk == False)
+
+- stat:
+    path: /etc/chef/etimoshenko.pem
+  register: sym_credentials
+- name: Del default aws credential file
+  file: path=/etc/chef/etimoshenko.pem state=absent
+  when: sym_credentials.stat.islnk is defined and sym_credentials.stat.islnk == False
+- name: Link ssh_config file
+  become: True
+  file: dest=/etc/chef/etimoshenko.pem src="{{ yandex_config_dir }}/chef/etimoshenko.pem" state=link
+  when: (sym_credentials.stat.islnk is not defined) or (sym_credentials.stat.islnk == False)

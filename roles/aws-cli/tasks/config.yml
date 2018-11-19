@@ -1,0 +1,20 @@
+- stat:
+    path: ~/.aws/config
+  register: sym_config
+- name: Del default aws conf file
+  file: path=~/.aws/config state=absent
+  when: sym_config.stat.islnk is defined and sym.stat.islnk == False
+- name: Link ssh_config file
+  file: dest=~/.aws/config src="{{ yandex_config_dir }}/aws/config" state=link
+  when: (sym_config.stat.islnk is not defined) or (sym_config.stat.islnk == False)
+
+
+- stat:
+    path: ~/.aws/credentials
+  register: sym_credentials
+- name: Del default aws credential file
+  file: path=~/.aws/credentials state=absent
+  when: sym_credentials.stat.islnk is defined and sym_credentials.stat.islnk == False
+- name: Link ssh_config file
+  file: dest=~/.aws/credentials src="{{ yandex_config_dir }}/aws/credentials" state=link
+  when: (sym_credentials.stat.islnk is not defined) or (sym_credentials.stat.islnk == False)
