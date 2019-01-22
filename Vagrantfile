@@ -13,6 +13,7 @@ config.ssh.insert_key = false
 
 config.vm.define "vagrant1" do |vagrant1|
   vagrant1.vm.box = "bento/ubuntu-18.04"
+  config.vm.synced_folder "/yandex/ubuntu-configs", "/mnt/yandex"
 end
 
 end

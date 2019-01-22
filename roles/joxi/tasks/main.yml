@@ -1,0 +1,12 @@
+---
+# tasks file for joxi
+- name: Download joxi
+  get_url:
+    url: http://dl.joxi.ru/linux/joxi-amd64.deb
+    dest: /tmp/joxi.deb
+    mode: 0755
+
+- name: Install joxi
+  become: True
+  apt:
+    deb: /tmp/joxi.deb

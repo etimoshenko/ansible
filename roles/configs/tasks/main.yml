@@ -17,3 +17,34 @@
   become: True
   file: dest=/etc/ssh/ssh_config src="{{ yandex_config_dir }}/config" state=link
   when: (sym.stat.islnk is not defined) or (sym.stat.islnk == False)
+
+- name: Copy rsa key file
+  command: 'cp "{{ yandex_config_dir }}/id_rsa" "/home/{{ ansible_user_id }}/.ssh/id_rsa"'
+- name: Copy rsa key file
+  command: 'chmod 600 "/home/{{ ansible_user_id }}/.ssh/id_rsa"'
+
+- name: SSH bash-completion
+  become: True
+  copy:
+    src: ssh-completion
+    dest: /etc/bash_completion.d/ssh
+
+- name: Del default vpn config
+  become: True
+  file: path=/etc/vpnc/default.conf state=absent
+- name: Copy vpn config
+  become: True
+  copy:
+    src: default.conf
+    dest: /etc/vpnc/default.conf
+
+- name: Copy vpn connector
+  become: True
+  copy:
+    src: neklo-vpn
+    dest: /usr/bin/neklo-vpn
+    mode: 0755
+
+- name: Enable clock on top
+  become: True
+  shell: "gsettings set org.gnome.desktop.interface clock-show-seconds true && gsettings set org.gnome.desktop.interface clock-show-date true"

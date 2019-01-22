@@ -1,0 +1,19 @@
+---
+# tasks file for powertop
+- name: Check that the powertop service exist
+  stat:
+    path: /etc/systemd/system/powertop.service
+  tags: powertop
+  register: powertop_result
+
+- name: Install powertop service
+  become: True
+  copy:
+    src: powertop.service
+    dest: /etc/systemd/system/powertop.service
+  when: powertop_result.stat.exists == False
+  tags: powertop
+
+- name: Start powertop
+  become: True
+  systemd: state=started name=powertop enabled=yes

@@ -1,0 +1,15 @@
+---
+# tasks file for dropbox
+- name: Check that the dropbox exist
+  stat:
+    path: /usr/bin/dropbox
+  tags: dropbox
+  register: dropbox_result
+
+- name: Install dropbox ubuntu apt packages
+  apt:
+    deb: "{{ dropbox_deb }}"
+    state: present
+  become: True
+  tags: dropbox
+  when: dropbox_result.stat.exists == False

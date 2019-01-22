@@ -1,10 +1,47 @@
 ---
+- name: Remmina repo Add
+  become: True
+  run_once: True
+  apt_repository:
+    repo: ppa:remmina-ppa-team/remmina-next
+
 - name: install apt packages
   apt: pkg={{ item }} update_cache=yes cache_valid_time=3600
   become: True
   with_items:
     - htop
     - iotop
+    - libcurl3
+    - shutter
     - git
     - vim
     - python-pip
+    - gnome-tweaks
+    - bash-completion
+    - traceroute
+    - python-pip
+    - make
+    - powertop
+    - vpnc
+    - gcc
+    - geany
+    - clipit
+    - ekiga
+    - remmina
+    - remmina-plugin-*
+    - libfreerdp-plugins-standard
+    - filezilla
+    - gnome-tweak-tool
+    - nodejs
+    - nmap
+    - okular
+    - wine-stable
+    - net-tools
+    - vlc
+
+
+#- name: install snap packages
+#  command: snap install {{ item }}
+#  with_items:
+#  - atom
+#  - slack

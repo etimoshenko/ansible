@@ -1,0 +1,9 @@
+---
+# tasks file for snap
+- name: "snap install"
+  command: "snap install {{ item }} --classic"
+  become: True
+  with_items:
+    - slack
+    - pycharm-community
+    - telegram-desktop

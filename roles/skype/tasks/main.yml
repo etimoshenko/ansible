@@ -1,0 +1,21 @@
+---
+# tasks file for skype
+- name: Skype | Add repo
+  become: True
+  run_once: True
+  copy:
+    dest: /etc/apt/sources.list.d/skype.list
+    content: "deb [arch=amd64] https://repo.skype.com/deb stable main"
+
+- name: Skype | Add repo key
+  run_once: True
+  become: True
+  apt_key:
+    url: https://repo.skype.com/data/SKYPE-GPG-KEY
+    state: present
+    keyring: /etc/apt/trusted.gpg.d/skype.gpg
+
+- name: Skype | apt update
+  become: True
+  apt:
+    update_cache: yes

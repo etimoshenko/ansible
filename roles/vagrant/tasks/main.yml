@@ -1,0 +1,15 @@
+---
+- name: Check that the vagrant exists
+  stat:
+    path: /usr/bin/vagrant
+  tags: vagrant
+  register: vagrant_result
+
+- name: Install vagrant ubuntu apt packages
+  run_once: True
+  apt:
+    deb: "{{ vagrant_deb }}"
+    state: present
+  become: True
+  tags: vagrant
+  when: vagrant_result.stat.exists == False

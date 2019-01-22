@@ -1,1 +1,1 @@
-{"virtualbox":{"/vagrant":{"guestpath":"/vagrant","hostpath":"/yandex/neklo/Dropbox/scripts/ansible/mybook","disabled":false,"__vagrantfile":true}}}
+{"virtualbox":{"/mnt/yandex":{"guestpath":"/mnt/yandex","hostpath":"/yandex/ubuntu-configs","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/yandex/neklo/Dropbox/scripts/ansible/mybook","disabled":false,"__vagrantfile":true}}}

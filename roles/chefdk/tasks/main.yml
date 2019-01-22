@@ -1,8 +1,17 @@
 ---
+- name: Check that the chef exists
+  stat:
+    path: /usr/bin/chef
+  tags: chef
+  register: chef_result
+
 - name: install chefdk ubuntu apt packages
+  run_once: True
   apt:
     deb: "{{ chefdk_deb }}"
     state: present
   become: True
-  
+  tags: chef
+  when: chef_result.stat.exists == False
+
 - include: configs.yml

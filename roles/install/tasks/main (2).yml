@@ -1,0 +1,16 @@
+---
+- name: install apt packages
+  apt: pkg={{ item }} update_cache=yes cache_valid_time=3600
+  become: True
+  with_items:
+    - bash-completion
+    - htop
+    - iotop
+    - git
+    - traceroute
+    - python-pip
+    - make
+    - powertop
+    - vpnc
+    - gcc
+    - skypeforlinux

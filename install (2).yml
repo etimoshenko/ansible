@@ -1,13 +1,9 @@
 ---
 - name: install packages
-  #hosts: vagrant1
   hosts: 127.0.0.1
   vars:
-    #yandex_config_dir: "/mnt/yandex"
     yandex_config_dir: "/data/YandexDisk/YandexDisk/ubuntu-configs/"
     chefdk_deb: "https://packages.chef.io/files/stable/chefdk/3.4.38/ubuntu/18.04/chefdk_3.4.38-1_amd64.deb"
-    vagrant_deb: "https://releases.hashicorp.com/vagrant/2.2.2/vagrant_2.2.2_x86_64.deb"
-    dropbox_deb: "https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2018.11.28_amd64.deb"
   pre_tasks:
     - name: update apt cache
       become: True
@@ -15,13 +11,7 @@
   roles:
     - role: configs
     - role: install
-    #- role: joxi
-    - role: snap
     - role: docker
     - role: yandex-disk
     - role: aws-cli
     - role: chefdk
-    - role: skype
-    - role: vagrant
-    - role: powertop
-    - role: dropbox

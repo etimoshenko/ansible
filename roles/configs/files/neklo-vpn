@@ -1,0 +1,2 @@
+#!/bin/bash
+sudo vpnc-connect --local-port 0
